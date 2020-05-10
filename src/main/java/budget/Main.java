@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         TransactionDao transactionDao = new TransactionDao ();
-        //transactionDao.createDatabaseStructure ();
 
         Scanner scanner = new Scanner (System.in);
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDao {
-    private static Connection connection;
+    private Connection connection;
 
     public TransactionDao() {
         DatabaseConnection.connectToDatabase ();
