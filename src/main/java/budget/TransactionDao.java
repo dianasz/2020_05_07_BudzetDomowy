@@ -25,6 +25,18 @@ public class TransactionDao {
     public void createDatabaseStructure(){
         createSchema();
         createTable();
+        cleanTables();
+        insertExamples ();
+    }
+
+    private void cleanTables() {
+        String cleanSql ="delete from transaction;";
+        try {
+            PreparedStatement statement = connection.prepareStatement (cleanSql);
+            statement.executeUpdate ();
+        } catch (SQLException e) {
+            System.err.println ("Wystąpił błąd");
+        }
     }
 
     private void createTable() {
@@ -51,6 +63,21 @@ public class TransactionDao {
         }
     }
 
+    private void insertExamples(){
+        String insertExampleOne ="insert into transaction (type, description, amount, date) values ('INCOME', 'urodziny', 200.50, '2020-05-10');";
+        String insertExampleTwo ="insert into transaction (type, description, amount, date) values ('EXPENSE', 'zakupy', 139.99, '2020-05-08');";
+        String insertExampleThree ="insert into transaction (type, description, amount, date) values ('INCOME', 'zwrot podatku', 1.50, '2020-04-30');";
+        String insertExampleFour ="insert into transaction (type, description, amount, date) values ('EXPENSE', 'doładowanie telefonu', 50, '2020-05-04');";
+        try {
+            connection.prepareStatement (insertExampleOne).executeUpdate ();
+            connection.prepareStatement (insertExampleTwo).executeUpdate ();
+            connection.prepareStatement (insertExampleThree).executeUpdate ();
+            connection.prepareStatement (insertExampleFour).executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+    }
+
     //C-create
     public void createTransaction(Transaction transaction){
         String insertTransactionSql = "insert into transaction(type, description, amount, date) values(?,?,?,?)";
@@ -63,7 +90,6 @@ public class TransactionDao {
             statement.executeUpdate ();
         } catch (SQLException exception) {
             System.err.println ("Nie udało się zapisać rekordu");
-
         }
     }
 
