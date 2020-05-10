@@ -2,14 +2,14 @@ package budget;
 
 public class Transaction {
     private Long id;
-    private Type type;
+    private TransactionType type;
     private String description;
     private double amount;
     private String date;
 
     public Transaction(){}
 
-    public Transaction(Type type, String description, double amount, String date) {
+    public Transaction(TransactionType type, String description, double amount, String date) {
         this.type = type;
         this.description = description;
         this.amount = amount;
@@ -24,11 +24,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public Type getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

@@ -24,9 +24,9 @@ public class Main {
                 case "0": isOptionSelected = false;
                 case "1": transactionDao.createTransaction (transaction); break;
                 case "2": transactionDao.updateTransaction (transaction); break;
-                case "3": transactionDao.deleteTransaction (1L); break;
-                case "4": transactionDao.read (Type.INCOME); break;
-                case "5": transactionDao.read (Type.EXPENSE); break;
+                case "3": transactionDao.performDeleteAction (); break;
+                case "4": transactionDao.read (TransactionType.INCOME); break;
+                case "5": transactionDao.read (TransactionType.EXPENSE); break;
                 default:
                     System.out.println ("Nie ma takiej opcji");
             }

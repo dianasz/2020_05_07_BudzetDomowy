@@ -1,5 +1,5 @@
 package budget;
 
-public enum Type {
+public enum TransactionType {
     INCOME, EXPENSE;
 }

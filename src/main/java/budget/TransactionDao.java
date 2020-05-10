@@ -3,9 +3,14 @@ package budget;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class TransactionDao {
     private Connection connection;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/budget?characterEncoding=utf8&serverTimezone=UTC&useSSL=false";
+    private static final String USER = "root";
+    private static final String PASSWORD = "admin";
 
     public TransactionDao() {
         DatabaseConnection.connectToDatabase ();
@@ -28,7 +33,7 @@ public class TransactionDao {
     }
 
     //R-read incomes/expenses
-    public List<Transaction> read(Type type){
+    public List<Transaction> read(TransactionType type){
         String readSql = "select * from transactions  where type=?";
         try {
             PreparedStatement statement = connection.prepareStatement (readSql);
@@ -63,7 +68,6 @@ public class TransactionDao {
             statement.setString (4, transaction.getDate ());
             statement.setLong (5, transaction.getId ());
             statement.executeUpdate ();
-            System.out.println ("Rekord został zaktualizowany");
         } catch (SQLException exception) {
             System.err.println ("Wystąpił błąd podczas aktualizowania transakcji");
         }
@@ -71,15 +75,22 @@ public class TransactionDao {
 
     //D-delete
     public void deleteTransaction(Long id){
-        String deleteSql = "delete from transactions where id=?";
+        String deleteSql = "delete from transaction where id=?";
         try {
             PreparedStatement statement = connection.prepareStatement (deleteSql);
             statement.setLong (1, id);
             statement.executeUpdate ();
-            System.out.println ("Rekord został usunięty");
         } catch (SQLException exception) {
             System.err.println ("Wystąpił błąd podczas usuwaniu rekordu");
         }
+    }
+
+    public void performDeleteAction(){
+        System.out.println ("Podaj id transakcji, którą chcesz usunąć");
+        Scanner scanner = new Scanner (System.in);
+        Long id = scanner.nextLong ();
+        deleteTransaction (id);
+        close ();
     }
 
     public void close(){
