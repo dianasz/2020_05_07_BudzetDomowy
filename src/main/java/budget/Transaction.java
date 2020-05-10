@@ -16,6 +16,14 @@ public class Transaction {
         this.date = date;
     }
 
+    public Transaction(Long id, TransactionType type, String description, double amount, String date) {
+        this.id = id;
+        this.type = type;
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+    }
+
     public Long getId() {
         return id;
     }

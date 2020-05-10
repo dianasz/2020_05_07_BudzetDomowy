@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        TransactionActions transactionActions = new TransactionActions ();
         TransactionDao transactionDao = new TransactionDao ();
+        transactionDao.createDatabaseStructure ();
 
         Scanner scanner = new Scanner (System.in);
 
+        System.out.println (TransactionType.values ());
         boolean isOptionSelected = true;
         while(isOptionSelected){
             System.out.println ("Wybierz akcję");
@@ -22,11 +25,11 @@ public class Main {
             Transaction transaction = new Transaction ();
             switch(userChoice){
                 case "0": isOptionSelected = false;
-                case "1": transactionDao.createTransaction (transaction); break;
-                case "2": transactionDao.updateTransaction (transaction); break;
-                case "3": transactionDao.performDeleteAction (); break;
-                case "4": transactionDao.read (TransactionType.INCOME); break;
-                case "5": transactionDao.read (TransactionType.EXPENSE); break;
+                case "1": transactionActions.performCreateAction (); break;
+                case "2": transactionActions.performUpdateAction (); break;
+                case "3": transactionActions.performDeleteAction (); break;
+                case "4": transactionActions.performReadIncomesAction (); break;
+                case "5": transactionActions.performReadExpensesAction (); break;
                 default:
                     System.out.println ("Nie ma takiej opcji");
             }
