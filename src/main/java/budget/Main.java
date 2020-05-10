@@ -10,7 +10,6 @@ public class Main {
 
         Scanner scanner = new Scanner (System.in);
 
-        System.out.println (TransactionType.values ());
         boolean isOptionSelected = true;
         while(isOptionSelected){
             System.out.println ("Wybierz akcję");

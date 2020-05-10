@@ -100,7 +100,7 @@ public class TransactionDao {
         String readSql = "select * from transaction  where type=?";
         try {
             PreparedStatement statement = connection.prepareStatement (readSql);
-            statement.setString (1, String.valueOf (type.name ()));
+            statement.setString (1, String.valueOf (type));
             ResultSet resultSet = statement.executeQuery ();
 
             List<Transaction> transactionList = new ArrayList<>();
