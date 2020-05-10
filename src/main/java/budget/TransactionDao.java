@@ -3,7 +3,6 @@ package budget;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class TransactionDao {
     private static final String URL = "jdbc:mysql://localhost:3306/budget?characterEncoding=utf8&serverTimezone=UTC&useSSL=false";
@@ -88,19 +87,39 @@ public class TransactionDao {
             }
             return transactionList;
         } catch (SQLException exception) {
-            System.err.println ("Błąd podczas wczytywania transakcji");
+            System.err.println ("Wystąpił błąd podczas wczytywania transakcji");
         }
         return null;
     }
 
     //U-update
     public void updateTransaction(Transaction transaction){
-
+        String updateSql = "update transaction set type=?, description=?, amount=?, date=? where id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement (updateSql);
+            statement.setString(1, String.valueOf(transaction.getType ()));
+            statement.setString (2, transaction.getDescription ());
+            statement.setDouble (3, transaction.getAmount ());
+            statement.setString (4, transaction.getDate ());
+            statement.setLong (5, transaction.getId ());
+            statement.executeUpdate ();
+            System.out.println ("Rekord został zaktualizowany");
+        } catch (SQLException exception) {
+            System.err.println ("Wystąpił błąd podczas aktualizowania transakcji");
+        }
     }
 
     //D-delete
     public void deleteTransaction(Long id){
-
+        String deleteSql = "delete from transactions where id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement (deleteSql);
+            statement.setLong (1, id);
+            statement.executeUpdate ();
+            System.out.println ("Rekord został usunięty");
+        } catch (SQLException exception) {
+            System.err.println ("Wystąpił błąd podczas usuwaniu rekordu");
+        }
     }
 
     public void close(){
