@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DatabaseStructure {
+public class DatabaseStructureService {
 
     static final String URL = "jdbc:mysql://localhost:3306/budget?characterEncoding=utf8&serverTimezone=UTC&useSSL=false";
     static final String USER = "root";
@@ -22,11 +22,11 @@ public class DatabaseStructure {
 
     static void createTable(Connection connection) {
         String createTableSql = "create table if not exists transaction(" +
-                "id INT primary key auto_increment," +
-                "type ENUM('EXPENSE', 'INCOME')," +
-                "description varchar(100)," +
-                "amount double," +
-                "date varchar(50))";
+                "id INT primary key auto_increment not null," +
+                "type ENUM('EXPENSE', 'INCOME','UNRECOGNIZED') not null," +
+                "description varchar(100) not null," +
+                "amount double not null," +
+                "date varchar(50) not null)";
         try {
             PreparedStatement statement = connection.prepareStatement (createTableSql);
             statement.executeUpdate ();
@@ -36,9 +36,10 @@ public class DatabaseStructure {
     }
 
     static void createSchema(Connection connection) {
-        String createSchematSql = "create schema if not exists budget";
+        String createSchemaSql = "create schema if not exists budget";
         try {
-            PreparedStatement statement = connection.prepareStatement (createSchematSql);
+            PreparedStatement statement = connection.prepareStatement (createSchemaSql);
+            statement.executeUpdate ();
         } catch (SQLException exception) {
             System.err.println ("Wystąpił błąd przy tworzeniu schematu");
         }

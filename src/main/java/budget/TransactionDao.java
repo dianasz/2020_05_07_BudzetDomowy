@@ -2,6 +2,7 @@ package budget;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TransactionDao {
@@ -12,16 +13,16 @@ public class TransactionDao {
     }
 
     public void createDatabaseStructure() {
-        DatabaseStructure.createSchema (connection);
-        DatabaseStructure.createTable (connection);
-        DatabaseStructure.cleanTables (connection);
-        DatabaseStructure.insertExamples (connection);
+        DatabaseStructureService.createSchema (connection);
+        DatabaseStructureService.createTable (connection);
+        DatabaseStructureService.cleanTables (connection);
+        DatabaseStructureService.insertExamples (connection);
     }
 
     private void connectToDatabase() {
         try {
             Class.forName ("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection (DatabaseStructure.URL, DatabaseStructure.USER, DatabaseStructure.PASSWORD);
+            connection = DriverManager.getConnection (DatabaseStructureService.URL, DatabaseStructureService.USER, DatabaseStructureService.PASSWORD);
         } catch (ClassNotFoundException exception) {
             System.err.println ("Nie znaleziono klasy sterownika");
         } catch (SQLException exception) {
@@ -66,7 +67,7 @@ public class TransactionDao {
         } catch (SQLException exception) {
             System.err.println ("Wystąpił błąd podczas wczytywania transakcji");
         }
-        return null;
+        return Collections.emptyList();
     }
 
     //U-update
